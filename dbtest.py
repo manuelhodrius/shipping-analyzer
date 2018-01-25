@@ -18,8 +18,9 @@ def total_rows(cursor, table_name, print_out=False):
     c.execute('SELECT COUNT(*) FROM {}'.format(table_name))
     count = c.fetchall()
     if print_out:
-        print('\nTotal rows: {}'.format(count[0][0]))
+        print('Total rows: {}'.format(count[0][0]))
     return count[0][0]
+
 
 def table_col_info(cursor, table_name, print_out=False):
     """ Returns a list of tuples with column informations:
@@ -54,7 +55,6 @@ def values_in_col(cursor, table_name, print_out=True):
             print('{}: {}'.format(i[0], i[1]))
     return col_dict
 
-
 if __name__ == '__main__':
 
     sqlite_file = 'loggerdata.sqlite'
@@ -62,7 +62,9 @@ if __name__ == '__main__':
 
     conn, c = connect(sqlite_file)
     total_rows(c, table_name, print_out=True)
-    table_col_info(c, table_name, print_out=True)
-    values_in_col(c, table_name, print_out=True) # slow on large data bases
+#    table_col_info(c, table_name, print_out=True)
+#    values_in_col(c, table_name, print_out=True) # slow on large data bases
 
     close(conn)
+
+
