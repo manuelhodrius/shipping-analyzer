@@ -41,13 +41,7 @@ c.execute("ALTER TABLE {tn} ADD COLUMN {cn} {ct}"\
         .format(tn=table_name, cn='z', ct='REAL'))
 
 c.execute("ALTER TABLE {tn} ADD COLUMN {cn} {ct}"\
-        .format(tn=table_name, cn='temp', ct='REAL'))
-
-c.execute("ALTER TABLE {tn} ADD COLUMN {cn} {ct}"\
-        .format(tn=table_name, cn='preassure', ct='REAL'))
-
-c.execute("ALTER TABLE {tn} ADD COLUMN {cn} {ct}"\
-        .format(tn=table_name, cn='humidity', ct='REAL'))
+        .format(tn=table_name, cn='xyzsum', ct='REAL'))
 
 # Committing changes and closing the connection to the database file
 conn.commit()

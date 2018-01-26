@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     conn, c = connect(sqlite_file)
     total_rows(c, table_name, print_out=True)
-#    table_col_info(c, table_name, print_out=True)
+    table_col_info(c, table_name, print_out=True)
 #    values_in_col(c, table_name, print_out=True) # slow on large data bases
 
     close(conn)
