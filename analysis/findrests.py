@@ -12,7 +12,7 @@ cur.execute("ALTER TABLE loggerdata ADD COLUMN orientation TEXT")  # Add new tab
 
 
 # Set limits
-samples = 500
+samples = 100
 maxdiff = .2
 
 # Number of all cells
