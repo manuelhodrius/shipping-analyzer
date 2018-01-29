@@ -1,0 +1,24 @@
+# counter,timestamp,date,time,cap,x,y,z,xyzsum
+# helpful: http://www.labri.fr/perso/nrougier/teaching/matplotlib/
+
+import sqlite3
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+
+def dbrequest2(lower, upper):
+    # connect to database
+    conn = sqlite3.connect('loggerdata.sqlite')
+    cur = conn.cursor()
+    # select values
+    cur.execute("SELECT * FROM loggerdata WHERE counter > ? AND counter < ? ORDER BY counter", (lower, upper))
+    #cur.execute("SELECT x, y, z, timestamp, date, time FROM loggerdata WHERE rowid = 0")
+    values = cur.fetchall()
+    #print ([x[0] for x in data])
+    return values
+
+
+
+values = dbrequest2(1, 20000)
+print (len(values))
+

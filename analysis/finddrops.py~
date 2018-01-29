@@ -138,7 +138,7 @@ for row in rows:
 ###################
 
 # get the drops from the freshly made table drops
-cur.execute("SELECT firstrow, lastrow, dropnr, dropdur, height FROM drops ORDER BY dropnr ASC")
+cur.execute("SELECT firstrow, lastrow, dropnr, dropdur, height FROM drops")
 data = cur.fetchall()
 
 end = len(data)

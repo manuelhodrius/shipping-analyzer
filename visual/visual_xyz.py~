@@ -19,7 +19,7 @@ from core.getdata import *
 def xyzplot3(lower, upper, filename, headline):
 
     # prompt info
-    print ("generating " + filename)
+    print ("generating " + f 
 
     # connect to database
     conn = sqlite3.connect('loggerdata.sqlite')
