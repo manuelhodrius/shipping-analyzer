@@ -20,7 +20,7 @@ c.execute("CREATE TABLE {tn} ('{cn}' {ct})"\
 
 # Adding the columns
 c.execute("ALTER TABLE {tn} ADD COLUMN {cn} {ct}"\
-        .format(tn=table_name, cn='timestamp', ct='TEXT'))
+        .format(tn=table_name, cn='timestamp', ct='REAL'))
 
 c.execute("ALTER TABLE {tn} ADD COLUMN {cn} {ct}"\
         .format(tn=table_name, cn='date', ct='TEXT'))

@@ -3,14 +3,14 @@
 
 import sqlite3
 
-# requesting data from a specific range 
-def getdata2(lower, upper):
+# requesting data from just one line 
+def getdata1(line):
     # connect to database
     conn = sqlite3.connect('loggerdata.sqlite')
     cur = conn.cursor()
     
     # select values
-    cur.execute("SELECT * FROM loggerdata WHERE counter >= ? AND counter <= ? ORDER BY counter", (lower, upper))
+    cur.execute("SELECT * FROM loggerdata WHERE counter = ?", (line))
 
     # save values in variable and return it
     values = cur.fetchall()
@@ -24,7 +24,7 @@ def getdata2(lower, upper):
     cur = conn.cursor()
     
     # select values
-    cur.execute("SELECT * FROM loggerdata WHERE counter >= ? AND counter <= ? ORDER BY counter", (lower, upper))
+    cur.execute("SELECT * FROM loggerdata WHERE counter >= ? AND counter <= ? ORDER BY counter DESC", (lower, upper))
 
     # save values in variable and return it
     values = cur.fetchall()
@@ -37,7 +37,7 @@ def getdata3(lower, upper, column):
     cur = conn.cursor()
 
     # select values from database and pass them to alldata (which is a tuple)
-    cur.execute("SELECT * FROM loggerdata WHERE counter >= ? AND counter <= ? ORDER BY counter", (lower, upper))
+    cur.execute("SELECT * FROM loggerdata WHERE counter >= ? AND counter <= ? ORDER BY counter DESC", (lower, upper))
     alldata = cur.fetchall()
 
     # get all values of column from alldata in the range [1]
@@ -45,5 +45,6 @@ def getdata3(lower, upper, column):
 
     return values
 
+#print(getdata2(2018868,2018948))
 
 #[1] https://stackoverflow.com/questions/22412258/get-the-first-element-of-each-tuple-in-a-list-in-python

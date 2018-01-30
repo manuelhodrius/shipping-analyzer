@@ -23,7 +23,7 @@ cur = conn.cursor()
 ###############
 
 # add new column for drops
-#cur.execute("ALTER TABLE loggerdata ADD COLUMN drops TEXT")  # Add new column for findings
+cur.execute("ALTER TABLE loggerdata ADD COLUMN drops TEXT")
 
 
 
@@ -131,7 +131,7 @@ for row in rows:
     csvWriter.writerow(row)
         
 
-
+'''
 ###################
 #     FINALE      #
 # visualize drops #
@@ -146,9 +146,9 @@ for x in range(0,end):
     lower = data[x][0] - dropboundary
     upper = data[x][1] + dropboundary
     filename = ("results/dropevent " + str(data[x][2]) + ".png")
-    headline = "Drop event " + str(data[x][3]) + ", " + str(round((data[x][3]),2)) + " ms"
-    xyzplot3(lower, upper, filename, headline)
-
+    headline = "Drop event " + str(data[x][2]) + ", " + str(round((data[x][3]),2)) + " ms"
+    xyzplot2(lower, upper, filename, headline)
+'''
 
 
 # [1] https://pythonadventures.wordpress.com/tag/import-from-parent-directory/

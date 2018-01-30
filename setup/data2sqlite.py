@@ -36,9 +36,7 @@ for filenum in range (0, len(files)):
             # save to_db into database
         cur.executemany("INSERT INTO loggerdata ('counter', 'timestamp', 'date', 'time', 'cap', 'x', 'y', 'z', 'xyzsum') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", csvcontent)
 
-        # commit to database
-        con.commit()
-        
+       
         # prompt info to console
         print ("File " + filelocation + " saved in database")
         filenum = filenum + 1
@@ -46,6 +44,13 @@ for filenum in range (0, len(files)):
     # stop loop by making newfile False
     else:
         newfile = False
+
+# create indexes
+con.execute("CREATE INDEX counter_in ON loggerdata (counter)")
+con.execute("CREATE INDEX timestamp_in ON loggerdata (timestamp)")
+
+# commit to database
+con.commit()
 
 # close database connection
 con.close()
