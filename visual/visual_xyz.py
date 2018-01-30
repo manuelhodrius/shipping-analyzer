@@ -91,14 +91,16 @@ def xyzplot2(lower, upper, filename, headline):
     # Legend
     box = ax.get_position()
     ax.set_position([box.x0, box.y0 + box.height * 0.1, box.x1 * 0.95, box.height * 0.9]) # shrink plot for legend [1]
-    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), frameon = False, ncol = 3)
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), frameon = False, ncol = 4)
 
     if (filename != ""):
         #filename = filename.replace("/", "_")
         plt.savefig(str(filename), dpi=300, transparent=False)
     else:
         plt.show()
-    pyplot.clf()
+
+    # cloes figure, otherwise program gets killed
+    plt.close(fig)
 
 ####################
 # PLOT WITH MILLIS #
@@ -179,7 +181,7 @@ def xyzplotmil(lower, upper, filename, headline):
     # Legend
     box = ax.get_position()
     ax.set_position([box.x0, box.y0 + box.height * 0.1, box.x1 * 0.95, box.height * 0.9]) # shrink plot for legend [1]
-    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), frameon = False, ncol = 3)
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), frameon = False, ncol = 4)
 
     if (filename != ""):
         #filename = filename.replace("/", "_")
@@ -187,13 +189,10 @@ def xyzplotmil(lower, upper, filename, headline):
     else:
         plt.show()
 
+    # cloes figure, otherwise program gets killed
+    plt.close(fig)
 
-
-#24467.162
-#2018868,2018948
-#xyzplotmil(24467.162,25467.162,"","")
-xyzplotmil(30000,50000,"","")
-#xyzplot2(1000,2000,"","")
+#xyzplotmil(6744569.0864,6746645.6057,"","")
 
 #[1] https://stackoverflow.com/questions/4700614/how-to-put-the-legend-out-of-the-plot
 #[2] https://stackoverflow.com/questions/4918425/subtract-a-value-from-every-number-in-a-list-in-python
