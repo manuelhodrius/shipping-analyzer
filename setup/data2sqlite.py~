@@ -46,7 +46,11 @@ for filenum in range (0, len(files)):
         newfile = False
 
 # create indexes
-con.execute("CREATE INDEX counter_in ON loggerdata (indexed_column);
+print ("Indexing data...")
+print ("Index 1 of " + str
+con.execute("CREATE INDEX counter_in ON loggerdata (counter)")
+con.execute("CREATE INDEX timestamp_in ON loggerdata (timestamp)")
+cur.execute("CREATE INDEX xyzsum_in ON loggerdata (xyzsum)")
 
 # commit to database
 con.commit()

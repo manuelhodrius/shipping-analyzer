@@ -23,8 +23,8 @@ cur = conn.cursor()
 ###############
 
 # add new column for drops
-#cur.execute("ALTER TABLE loggerdata ADD COLUMN drops TEXT")
-'''
+cur.execute("ALTER TABLE loggerdata ADD COLUMN drops TEXT")
+
 
 #################
 #     PART I    #
@@ -49,34 +49,18 @@ print (str(numlinesfound) + " lines found")
 # initiate dropcounter
 dropcounter = 0
 
-
-# loop through all lines. x is the number of current entry
-for x in range(0, numlinesfound):
-    # save the counter number of current finding
-    currval, = lines[x]
-
-    # don't ignore the first value, but execute the rest not when looping through the first line
-    if (x > 0):
-        # get the previous line number
-        preval, = lines[x-1] 
-
-        # calculate the difference between the line numbers to see 
-        # if it is a new drop (big difference) 
-        # or an ongoing drop (small difference) 
-        diff = (currval - preval)
-        
-        #if the current entry is not more than [dropdiff] after the previous
-        if (diff > dropdiff): 
-            # increase the dropcounter and prompt the finding
-            dropcounter = dropcounter + 1
-            print ("Drop no. " + str(dropcounter) + " detected")
+# loop through all lines. x is the number of current entry. Must begin at 1
+for x in range(1, numlinesfound):
+    # getdata gets handy here!    
+    values = getdata3(x, (x+1), 8)
+    firstval = values[
 
     # either way, save the finding in loggerdata in the new column. 
     # this enables to generate a table with the drops in the next part
-    cur.execute("UPDATE loggerdata SET drops = ? WHERE counter = ?", (dropcounter, currval,))
+#    cur.execute("UPDATE loggerdata SET drops = ? WHERE counter = ?", (dropcounter, currval,))
 
 
-
+'''
 ################
 #    PART II   #
 # saving drops #
@@ -129,7 +113,6 @@ csvWriter.writerow(["firstrow", "lastrow", "dropnr", "begin", "end", "dropdur", 
 for row in rows:
     csvWriter.writerow(row)
 
-'''
 
 ###################
 #     FINALE      #
@@ -145,7 +128,7 @@ for x in range(0,end):
     try:
         lower = data[x][0] - dropboundary
         upper = data[x][1] + dropboundary
-        filename = ("results/dropevent " + str(data[x][2]) + ".png")
+        filename = ("results/drops/dropevent " + str(data[x][2]) + ".png")
         headline = "Drop event " + str(data[x][2]) + ", " + str(round((data[x][3]),2)) + " ms, " + str(round((data[x][4]),2)) + " cm"
         xyzplotmil(lower, upper, filename, headline)
     except:

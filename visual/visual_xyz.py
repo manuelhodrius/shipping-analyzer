@@ -137,7 +137,7 @@ def xyzplotmil(lower, upper, filename, headline):
     xmin = min(timestampnorm)
 
     if (xmax > 10):
-        nummaygrid = round((xmax/10),0)
+        nummaygrid = round(((xmax-xmin)/10),0)
         nummingrid = nummaygrid / 10
     else:
         nummaygrid = 10

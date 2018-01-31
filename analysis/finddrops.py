@@ -23,7 +23,7 @@ cur = conn.cursor()
 ###############
 
 # add new column for drops
-#cur.execute("ALTER TABLE loggerdata ADD COLUMN drops TEXT")
+cur.execute("ALTER TABLE loggerdata ADD COLUMN drops TEXT")
 
 
 #################
@@ -144,7 +144,7 @@ for x in range(0,end):
     try:
         lower = data[x][0] - dropboundary
         upper = data[x][1] + dropboundary
-        filename = ("results/dropevent " + str(data[x][2]) + ".png")
+        filename = ("results/drops/dropevent " + str(data[x][2]) + ".png")
         headline = "Drop event " + str(data[x][2]) + ", " + str(round((data[x][3]),2)) + " ms, " + str(round((data[x][4]),2)) + " cm"
         xyzplotmil(lower, upper, filename, headline)
     except:

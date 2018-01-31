@@ -46,8 +46,14 @@ for filenum in range (0, len(files)):
         newfile = False
 
 # create indexes
+numofindexes = 3
+print ("Indexing data...")
+print ("Index 1 of " + str(numofindexes) + ".")
 con.execute("CREATE INDEX counter_in ON loggerdata (counter)")
+print ("Index 1 of " + str(numofindexes) + ".")
 con.execute("CREATE INDEX timestamp_in ON loggerdata (timestamp)")
+print ("Index 1 of " + str(numofindexes) + ".")
+cur.execute("CREATE INDEX xyzsum_in ON loggerdata (xyzsum)")
 
 # commit to database
 con.commit()
