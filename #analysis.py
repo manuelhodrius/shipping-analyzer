@@ -30,7 +30,6 @@ if (os.path.isfile('results') == False):
 print("\nFinding drops...")
 import analysis.finddrops
 
-'''
 print("\nFinding rests...")
 import analysis.findrests
-'''
+

@@ -27,7 +27,7 @@ cur = conn.cursor()
 # when not moving, every redout has a similar value than the readout before. 
 # Therefore, all sections with similar values are rests, interrupted by movement (where the values are not similar)
 
-'''
+
 ###############
 # PREPARATION #
 ###############
@@ -91,7 +91,6 @@ for x in range(0, 100000):
     # finally, write stuff to the database
     cur.execute("UPDATE loggerdata SET restnumber = ? WHERE counter = ?", (restnumber, x,))
     cur.execute("UPDATE loggerdata SET restormovement = ? WHERE counter = ?", (writevalue, x,))
-    '''
 
 
 ####################
@@ -100,10 +99,20 @@ for x in range(0, 100000):
 ####################
 
 # Then, find all phases
-cur.execute("SELECT min(counter), max(counter), min(timestamp), max(timestamp), restnumber, restormovement FROM loggerdata GROUP BY restnumber")
+cur.execute("SELECT min(counter), max(counter), min(timestamp), min(time), min(date), max(timestamp), max(time), max(date), restnumber, restormovement FROM loggerdata GROUP BY restnumber ORDER BY restnumber")
 phases = cur.fetchall()
 print (phases)
-    
+
+# Save all as csv
+
+# create csv file
+csvWriter = csv.writer(open("results/rest_and_movement.csv", "w"))
+# write first row
+csvWriter.writerow(["startcounter", "endcounter", "startmillis", "starttime", "startdate", "endmillis", "endtime", "enddate", "restnumber", "restormovement"])
+#write all other rows
+for row in phases:
+    csvWriter.writerow(row)
+
 
 '''
 # loop through all lines. x is the number of the current entry

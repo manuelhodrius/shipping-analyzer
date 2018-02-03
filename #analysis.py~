@@ -19,7 +19,7 @@ print ('\nFinished with preparing the database.')
 
 execfile('setup/dbtest.py')
 
-'''
+
 # Analyze data
 print ("\n\nBeginning with data analysis\n")
 
@@ -30,6 +30,7 @@ if (os.path.isfile('results') == False):
 print("\nFinding drops...")
 import analysis.finddrops
 
+'''
 print("\nFinding rests...")
 import analysis.findrests
 '''

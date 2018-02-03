@@ -100,10 +100,20 @@ for x in range(0, 100000):
 ####################
 
 # Then, find all phases
-cur.execute("SELECT min(counter), max(counter), min(timestamp), max(timestamp), restnumber, restormovement FROM loggerdata GROUP BY restnumber")
+cur.execute("SELECT min(counter), max(counter), min(timestamp), min(time), min(date), max(timestamp), max(time), max(date), restnumber, restormovement FROM loggerdata GROUP BY restnumber ORDER BY restnumber")
 phases = cur.fetchall()
 print (phases)
-    
+
+# Save all as csv
+
+# create csv file
+csvWriter = csv.writer(open("results/rest_and_movement.csv", "w"))
+# write first row
+csvWriter.writerow(["startcounter", "endcounter", "startmillis", "starttime", "startdate", "endmillis", "endtime", "enddate", "restnumber", "restormovement"])
+#write all other rows
+for row in phases:
+    csvWriter.writerow(row)
+
 
 '''
 # loop through all lines. x is the number of the current entry
