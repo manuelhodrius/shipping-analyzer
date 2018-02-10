@@ -33,7 +33,7 @@ cur = conn.cursor()
 ###############
 
 # add new column for rest number
-cur.execute("ALTER TABLE loggerdata ADD COLUMN restnumber TEXT")
+cur.execute("ALTER TABLE loggerdata ADD COLUMN restnumber INTEGER")
 cur.execute("ALTER TABLE loggerdata ADD COLUMN restormovement TEXT")
 
 # add new table where the rests finally are saved in an orderly manner
@@ -63,34 +63,37 @@ writevalue = "" # initialize writevalue
 # loop through all lines. x is the number of current entry. 
 # No worries about last value, because it gets not processed (range is up to, not including the last value. 
 for x in range(0, 100000):
-    cur.execute("SELECT xyzsum FROM loggerdata WHERE counter >= ? AND counter <= ? ORDER BY counter ASC", (x, x+1))
-    values = cur.fetchall()
-    # get the values for this iteration
-    firstval, = values[0]
-    lastval, = values[1]
-    valdiff = abs(lastval - firstval)
-    if (valdiff > restthreshold):
-        # if the difference between the values is bigger than the threshold
-        # it is moving
-        indicator = "moving"
-    else:
-        # if not, 
-        # it is resting
-        indicator = "resting"
-    # increase the counter for noting the number of concurrent findings
-    concur = concur + 1
-    if (concur > restconcurthres and writevalue != indicator):
-        # only change the writevalue if there were enough concurrent findings
-        # this smoothes out "flickering" if there is a lot of action going on
-        writevalue = indicator
-        # reset the number of concurrent findings
-        concur = 0
-        # a new rest/movement phase was detected. Increase the counter
-        restnumber = restnumber + 1
-        print("Number " + str(restnumber) + " detected. It is " + writevalue + ".")
-    # finally, write stuff to the database
-    cur.execute("UPDATE loggerdata SET restnumber = ? WHERE counter = ?", (restnumber, x,))
-    cur.execute("UPDATE loggerdata SET restormovement = ? WHERE counter = ?", (writevalue, x,))
+    try:
+        cur.execute("SELECT xyzsum FROM loggerdata WHERE counter >= ? AND counter <= ? ORDER BY counter ASC", (x, x+1))
+        values = cur.fetchall()
+        # get the values for this iteration
+        firstval, = values[0]
+        lastval, = values[1]
+        valdiff = abs(lastval - firstval)
+        if (valdiff > restthreshold):
+            # if the difference between the values is bigger than the threshold
+            # it is moving
+            indicator = "moving"
+        else:
+            # if not, 
+            # it is resting
+            indicator = "resting"
+        # increase the counter for noting the number of concurrent findings
+        concur = concur + 1
+        if (concur > restconcurthres and writevalue != indicator):
+            # only change the writevalue if there were enough concurrent findings
+            # this smoothes out "flickering" if there is a lot of action going on
+            writevalue = indicator
+            # reset the number of concurrent findings
+            concur = 0
+            # a new rest/movement phase was detected. Increase the counter
+            restnumber = restnumber + 1
+            print("Number " + str(restnumber) + " detected. It is " + writevalue + ".")
+        # finally, write stuff to the database
+        cur.execute("UPDATE loggerdata SET restnumber = ? WHERE counter = ?", (restnumber, x,))
+        cur.execute("UPDATE loggerdata SET restormovement = ? WHERE counter = ?", (writevalue, x,))
+    except:
+        continue
 
 
 ####################
@@ -101,7 +104,7 @@ for x in range(0, 100000):
 # Then, find all phases
 cur.execute("SELECT min(counter), max(counter), min(timestamp), min(time), min(date), max(timestamp), max(time), max(date), restnumber, restormovement FROM loggerdata GROUP BY restnumber ORDER BY restnumber")
 phases = cur.fetchall()
-print (phases)
+#print (phases)
 
 # Save all as csv
 
@@ -114,6 +117,7 @@ for row in phases:
     csvWriter.writerow(row)
 
 
+conn.close()
 '''
 # loop through all lines. x is the number of the current entry
 for x in range(0, totalcells):

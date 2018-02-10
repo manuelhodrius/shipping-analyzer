@@ -101,7 +101,7 @@ for dr in range(1, totaldrops):
     begin =  float(alldrops[d][3])
     end = float(alldrops[d][4])
     dropdur = end - begin
-    height = 0.5*9.81*(dropdur/1000)*(dropdur/1000)  # 0.5 gt2
+    height = 0.5*9.81*(dropdur/1000)*(dropdur/1000)*1000  # 0.5 gt2, in seconds; result in millimeters
 
     # inser only if drop is longer than threshold dropdur
     # d is the new drop number
@@ -144,7 +144,7 @@ for x in range(0,end):
     try:
         lower = data[x][0] - dropboundary
         upper = data[x][1] + dropboundary
-        filename = ("results/drops/dropevent " + str(data[x][2]) + ".png")
+        filename = ("results/visual/dropevent " + str(data[x][2]) + ".png")
         headline = "Drop event " + str(data[x][2]) + ", " + str(round((data[x][3]),2)) + " ms, " + str(round((data[x][4]),2)) + " cm"
         xyzplotmil(lower, upper, filename, headline)
     except:

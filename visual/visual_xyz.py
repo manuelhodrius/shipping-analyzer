@@ -106,7 +106,7 @@ def xyzplot2(lower, upper, filename, headline):
 # PLOT WITH MILLIS #
 ####################
 
-def xyzplotmil(lower, upper, filename, headline):
+def xyzplotmil(lower, upper, filename, headline, line):
 
     # prompt info
     print ("generating " + filename)
@@ -121,7 +121,7 @@ def xyzplotmil(lower, upper, filename, headline):
     cur.execute("SELECT timestamp FROM loggerdata WHERE counter = 0")
     mintime = cur.fetchall()
     mintime, = mintime[0]
-    
+
     cur.execute("SELECT x, y, z, timestamp, date, time, counter, xyzsum FROM loggerdata WHERE timestamp >= ? AND timestamp <= ? ORDER BY counter", (lower, upper))
     data = cur.fetchall()
     #print ([x[6] for x in data])
@@ -132,29 +132,34 @@ def xyzplotmil(lower, upper, filename, headline):
     date = [(x[4]) for x in data]
     time = [(x[5]) for x in data]
     xyzsum = [(x[7]) for x in data]
-    timestampnorm = [(float(x) - mintime) for x in timestamp]
-    xmax = max(timestampnorm)
-    xmin = min(timestampnorm)
+    timestampnorm = [(x[3] - mintime) for x in data]
+    xmax = timestamp[-1]
+    xmin = timestamp[0]
 
+    '''
     if (xmax > 10):
         nummaygrid = round(((xmax-xmin)/10),0)
         nummingrid = nummaygrid / 10
     else:
         nummaygrid = 10
         nummingrid = 1
-
-
+    '''
+    nummaygrid = round(((xmax-xmin)/10),0)
+    nummingrid = nummaygrid / 10
 
     # Plot
-    fig = plt.figure()
-    plt.grid(color='#dddddd', linestyle='-', linewidth=0.5)
+    fig = plt.subplots(figsize = (16,6), tight_layout=False)
 
     # Change Axes class
     ax = plt.axes()
+
+    # Grid modifications
+    ax.grid(color='#dddddd', linestyle='-', linewidth=0.5)
     ax.xaxis.set_major_locator(ticker.MultipleLocator(nummaygrid))
     ax.xaxis.set_minor_locator(ticker.MultipleLocator(nummingrid))
-    ax.set_xlim(xmin, xmax)
-
+    #ax.set_xlim(xmin, xmax)
+    ax.set_xlim(lower, upper)
+    
     # Labels
     ax.set_xlabel("milliseconds in $ms$")
     ax.set_ylabel("acceleration in $m/s^2$")
@@ -164,35 +169,43 @@ def xyzplotmil(lower, upper, filename, headline):
         ax.set_title("Acceleration of X, Y and Z Axis from" + datetime)
     else: 
         ax.set_title(str(headline) + datetime)
-
+    
     ax.set_frame_on(False)
 
     ax.set_aspect('auto')
-
-    ax.plot(timestampnorm, xdata, label='x acceleration', linewidth=0.6, color = "#A95260")
-    ax.plot(timestampnorm, ydata, label='y acceleration', linewidth=0.6, color = "#E7BE2B")
-    ax.plot(timestampnorm, zdata, label='z acceleration', linewidth=0.6, color = "#496391")
-    ax.plot(timestampnorm, xyzsum, label='|x| + |y| + |z|', linewidth=0.6, color = "#555555")
-
+    
+    ax.plot(timestamp, xdata, label='x acceleration', linewidth=0.6, color = "#A95260")
+    ax.plot(timestamp, ydata, label='y acceleration', linewidth=0.6, color = "#E7BE2B")
+    ax.plot(timestamp, zdata, label='z acceleration', linewidth=0.6, color = "#496391")
+    ax.plot(timestamp, xyzsum, label='|x| + |y| + |z|', linewidth=0.6, color = "#555555")
+    
     # Size
-    fig.set_size_inches(16, 6)
-    fig.tight_layout()
+    #fig.set_size_inches(16, 6)
+    #fig.tight_layout()
 
     # Legend
     box = ax.get_position()
     ax.set_position([box.x0, box.y0 + box.height * 0.1, box.x1 * 0.95, box.height * 0.9]) # shrink plot for legend [1]
     ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), frameon = False, ncol = 4)
+    
+
+    # draw vertical line from (70,100) to (70, 250)
+    #print(line)
+    if (line != ""):
+        ax.axvspan(line[0], line[1], facecolor='#F0F0F0', alpha=0.5) #[3]
+
 
     if (filename != ""):
         #filename = filename.replace("/", "_")
-        plt.savefig(str(filename), dpi=300, transparent=False)
+        plt.savefig(str(filename), dpi=300, transparent=False, bbox_inches=('tight'))
     else:
         plt.show()
 
     # cloes figure, otherwise program gets killed
-    plt.close(fig)
+    plt.close()
 
 #xyzplotmil(6744569.0864,6746645.6057,"","")
 
 #[1] https://stackoverflow.com/questions/4700614/how-to-put-the-legend-out-of-the-plot
 #[2] https://stackoverflow.com/questions/4918425/subtract-a-value-from-every-number-in-a-list-in-python
+#[3] https://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.axvspan
