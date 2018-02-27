@@ -40,6 +40,6 @@ for x in xrange(0,totaldiagrams):
         filename = ("results/visual/alldata/alldata " + str(x) + ".png")
         #filename = ("alldata " + str(x) + ".png")
         headline = "Drop data from " + str(sectionstart) + "ms until " + str(sectionend) + " ms"
-        xyzplotmil(sectionstart, sectionend, filename, "")
+        xyzplotmil(sectionstart, sectionend, filename, "", "")
     except:
         continue

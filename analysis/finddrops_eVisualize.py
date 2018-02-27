@@ -33,9 +33,10 @@ for x in range(0,end):
         lower = data[x][0] - dropboundary
         upper = data[x][1] + dropboundary
         #print(lower, "|", data[x][0], "||", data[x][1], "|", upper)
-        filename = ("results/visual/drops/dropevent " + str(data[x][2]) + ".png")
+        #filename = ("results/visual/drops/dropevent " + str(data[x][2]) + ".png")
+        filename = ("results/visual/drops/" + str(round((data[x][4]),2)) + "_mm_drop_" + str(data[x][2]) + ".png")
         #filename = ""
-        headline = "Drop event " + str(data[x][2]) + ", " + str(round((data[x][3]),2)) + " ms, " + str(round((data[x][4]),2)) + " cm"
+        headline = "Drop event " + str(data[x][2]) + ", " + str(round((data[x][3]),2)) + " ms, " + str(round((data[x][4]),2)) + " mm"
         line = (data[x][0], data[x][1])
         xyzplotmil(lower, upper, filename, headline, line)
     except:

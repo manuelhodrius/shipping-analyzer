@@ -6,7 +6,7 @@ import os
 
 # Delete old database
 if (os.path.isfile('loggerdata.sqlite') == True):
-    os.system('rm loggerdata.sqlite')
+    os.remove('loggerdata.sqlite')
 
 # Fix files
 print("Searching for corrupt files...")

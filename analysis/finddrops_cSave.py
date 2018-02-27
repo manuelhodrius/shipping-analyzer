@@ -31,10 +31,6 @@ alldrops = cur.fetchall()
 totaldrops = len(alldrops)
 #print(alldrops)
 
-
-
-
-
 # Save drops in new table of the database, therefore create it
 cur.execute("CREATE TABLE IF NOT EXISTS drops (firstrow INTEGER, lastrow INTEGER, dropnr INTEGER, begin REAL, end REAL, dropdur REAL, height REAL)")
 
@@ -48,17 +44,17 @@ for dr in range(1, totaldrops):
     begin =  float(alldrops[d][3])
     end = float(alldrops[d][4])
     dropdur = end - begin
-    height = 0.5*9.81*(dropdur/1000)*(dropdur/1000)*100  # 0.5 * g * t^2, in seconds; result in millimeters
+    height = 0.5*9.81*(dropdur/1000)*(dropdur/1000)*1000  # 0.5 * g * t^2, in seconds; result in millimeters
 
     # inser only if drop is longer than threshold dropdur
     # d is the new drop number
-    if (dropdur > nodrop):
+    if (dropdur > nodrop and dropdur < maxdropdur):
         cur.execute("INSERT INTO drops (firstrow, lastrow, dropnr, begin, end, dropdur, height) VALUES (?, ?, ?, ?, ?, ?, ?)", (firstrow, lastrow, dropnr, begin, end, dropdur, height))
 
         dropnr =  dropnr + 1
 
         # Give out the findings
-        print ("Drop " + str(dropnr) + " lasted " + str(round(dropdur,2)) + " ms and was from a height of " + str(round((height),2)) + " cm.")
+        print ("Drop " + str(dropnr) + " lasted " + str(round(dropdur,2)) + " ms and was from a height of " + str(round((height),2)) + " mm.")
 
 conn.commit()
 

@@ -173,11 +173,11 @@ def xyzplotmil(lower, upper, filename, headline, line):
     ax.set_frame_on(False)
 
     ax.set_aspect('auto')
-    
+    sqr = u'\u221A' + '$(x^2 + y^2 + z^2)$'
     ax.plot(timestamp, xdata, label='x acceleration', linewidth=0.6, color = "#A95260")
     ax.plot(timestamp, ydata, label='y acceleration', linewidth=0.6, color = "#E7BE2B")
     ax.plot(timestamp, zdata, label='z acceleration', linewidth=0.6, color = "#496391")
-    ax.plot(timestamp, xyzsum, label='|x| + |y| + |z|', linewidth=0.6, color = "#555555")
+    ax.plot(timestamp, xyzsum, label=sqr, linewidth=0.6, color = "#555555")
     
     # Size
     #fig.set_size_inches(16, 6)
@@ -189,7 +189,7 @@ def xyzplotmil(lower, upper, filename, headline, line):
     ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), frameon = False, ncol = 4)
     
 
-    # draw vertical line from (70,100) to (70, 250)
+    # mark a section of the plot in light grey - preferably the area of the drop event
     #print(line)
     if (line != ""):
         ax.axvspan(line[0], line[1], facecolor='#F0F0F0', alpha=0.5) #[3]
