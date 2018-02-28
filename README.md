@@ -8,3 +8,10 @@ apt-get install
 
 pip install
 - matplotlib
+
+## Backlog
+
+* Drop detection by comparing peaks before and after drop
+* Add acceleration value to drop analysis
+* Diagram for resting/movement analysis
+* Statistics with peaks, average values, etc.
