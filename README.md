@@ -12,6 +12,6 @@ pip install
 ## Backlog
 
 * Drop detection by comparing peaks before and after drop
-* Add acceleration value to drop analysis
+* Add max. acceleration for every drop 
 * Diagram for resting/movement analysis
 * Statistics with peaks, average values, etc.
