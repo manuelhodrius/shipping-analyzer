@@ -53,6 +53,9 @@ import analysis.finddrops_cSave
 import analysis.finddrops_dOutput
 import analysis.finddrops_eVisualize
 
+# Peaks
+import analysis.findpeaks
+
 print("\nFinding rests...")
 import analysis.findrests
 
