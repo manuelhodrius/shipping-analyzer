@@ -41,6 +41,6 @@ for x in range(0,end):
         xyzplotmil(lower, upper, filename, headline, line)
     except:
         continue
-        
+
 
 # [1] https://pythonadventures.wordpress.com/tag/import-from-parent-directory/

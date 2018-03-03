@@ -28,7 +28,7 @@ cur.execute("SELECT * FROM drops ORDER BY dropnr")
 rows = cur.fetchall()
 
 csvWriter = csv.writer(open("results/drops.csv", "w"))
-csvWriter.writerow(["firstrow", "lastrow", "dropnr", "begin", "end", "dropdur", "height"])
+csvWriter.writerow(["date", "time", "firstrow", "lastrow", "dropnr", "begin", "end", "dropdur", "height"])
 for row in rows:
     csvWriter.writerow(row)
 

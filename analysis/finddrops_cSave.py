@@ -32,7 +32,7 @@ totaldrops = len(alldrops)
 #print(alldrops)
 
 # Save drops in new table of the database, therefore create it
-cur.execute("CREATE TABLE IF NOT EXISTS drops (firstrow INTEGER, lastrow INTEGER, dropnr INTEGER, begin REAL, end REAL, dropdur REAL, height REAL)")
+cur.execute("CREATE TABLE IF NOT EXISTS drops (date TEXT, time TEXT, firstrow INTEGER, lastrow INTEGER, dropnr INTEGER, begin REAL, end REAL, dropdur REAL, height REAL)")
 
 # save the values in individual variables and insert them into the new table
 dropnr =  0
@@ -44,12 +44,19 @@ for dr in range(1, totaldrops):
     begin =  float(alldrops[d][3])
     end = float(alldrops[d][4])
     dropdur = end - begin
+    
+    # get date and time
+    cur.execute("SELECT date, time FROM loggerdata WHERE counter = (?)", (firstrow,))
+    datentime = cur.fetchall()
+    date = datentime[0][0]
+    time = datentime[0][1]
+    
     height = 0.5*9.81*(dropdur/1000)*(dropdur/1000)*1000  # 0.5 * g * t^2, in seconds; result in millimeters
 
     # inser only if drop is longer than threshold dropdur
     # d is the new drop number
     if (dropdur > nodrop and dropdur < maxdropdur):
-        cur.execute("INSERT INTO drops (firstrow, lastrow, dropnr, begin, end, dropdur, height) VALUES (?, ?, ?, ?, ?, ?, ?)", (firstrow, lastrow, dropnr, begin, end, dropdur, height))
+        cur.execute("INSERT INTO drops (dropnr, date, time, firstrow, lastrow, begin, end, dropdur, height) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (dropnr, date, time, firstrow, lastrow, begin, end, dropdur, height))
 
         dropnr =  dropnr + 1
 
