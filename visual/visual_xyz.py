@@ -118,7 +118,8 @@ def xyzplotmil(lower, upper, filename, headline, line):
     graphArray = []
 
     # normalize timestamp -> first row should have timestamp 0
-    cur.execute("SELECT timestamp FROM loggerdata WHERE counter = 0")
+    #cur.execute("SELECT timestamp FROM loggerdata WHERE counter = 0")
+    cur.execute("SELECT min(timestamp) FROM loggerdata")
     mintime = cur.fetchall()
     mintime, = mintime[0]
 
