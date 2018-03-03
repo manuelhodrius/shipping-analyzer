@@ -15,4 +15,3 @@ pip install
 * Add max. acceleration for every drop 
 * Diagram for resting/movement analysis
 * Statistics with peaks, average values, etc.
-* Add date and time to drop analysis csv export
