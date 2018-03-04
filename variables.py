@@ -19,6 +19,9 @@ restconcurthres = 10        # threshold how far away two values can be
 # VISUALS
 sectionlength = 30			# length of section for visualizing _all_ data
 
+# PEAKS
+peakthres = 2				# threshold for peak detection
+
 
 
 
