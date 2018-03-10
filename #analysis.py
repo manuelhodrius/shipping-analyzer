@@ -44,6 +44,8 @@ if (os.path.exists('results/visual/drops') == False):
     os.makedirs('results/visual/drops')
 if (os.path.exists('results/visual/alldata') == False):
     os.makedirs('results/visual/alldata')
+if (os.path.exists('results/movement') == False):
+    os.makedirs('results/movement')
 
 # Drops
 print("\nFinding drops...")
@@ -56,8 +58,8 @@ import analysis.finddrops_eVisualize
 # Peaks
 import analysis.findpeaks
 
-print("\nFinding rests...")
-import analysis.findrests
+print("\nFinding movement...")
+import analysis.getmovement
 
 print("Gnerating diagrams for all data...")
 import visual.visual_all
