@@ -44,8 +44,8 @@ if (os.path.exists('results/visual/drops') == False):
     os.makedirs('results/visual/drops')
 if (os.path.exists('results/visual/alldata') == False):
     os.makedirs('results/visual/alldata')
-if (os.path.exists('results/movement') == False):
-    os.makedirs('results/movement')
+if (os.path.exists('results/move') == False):
+    os.makedirs('results/move')
 
 # Drops
 print("\nFinding drops...")
